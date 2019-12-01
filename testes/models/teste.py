@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models import constraints
 from placas.models import modelo_placas, cadastro_lote
-#from requisicao.models import Item_requisicao, Cadastro_Requisicao
+from contas.models import Usuario
+
 
 STATUS_CHOICES = (  
     ("Pendente", "Pendente"),
@@ -70,6 +71,15 @@ class Teste(models.Model):
     Observacao = models.CharField(
         'Observação', 
         max_length=100
+    )
+
+    username = models.ForeignKey(
+        'contas.usuario',
+        related_name='contas_usuario_username_teste',
+        on_delete = models.PROTECT,
+        editable = False,
+        default = "",
+        null = True
     )
 
     def __str__(self):

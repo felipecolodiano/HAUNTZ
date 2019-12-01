@@ -8,20 +8,38 @@
 {% block conteudo %}
 
 
+
+<script>
+  $(document).on('click','.navbar-nav li a',function(){
+    var tab = $(this).data('tab');
+  $('.'+tab).trigger('click');
+  console.log(tab);
+});
+
+</script>
+
+
 <!--ABAS -->
 <div class="container-fluid ">
   <div class="card">
     <div class="card-body ">
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-pendentes-tab" data-toggle="tab" href="#nav-pendentes" role="tab" aria-controls="nav-pendentes" aria-selected="true">Testes Pendentes</a>
-          <a class="nav-item nav-link" id="nav-andamento-tab" data-toggle="tab" href="#nav-andamento" role="tab" aria-controls="nav-andamento" aria-selected="false">Testes Em andamento</a>          
-          <a class="nav-item nav-link" id="nav-finalizados-tab" data-toggle="tab" href="#nav-finalizados" role="tab" aria-controls="nav-finalizados" aria-selected="false">Testes Finalizados</a>
-        </div>
-      </nav>
+
+      
+        <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="nav-pendentes-tab" data-toggle="tab" href="#nav-pendentes" role="tab">Testes Pendentes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " id="nav-andamento-tab" data-toggle="tab" href="#nav-andamento" role="tab">Testes Em andamento</a>
+          </li>   
+         <li class="nav-item">
+          <a class="nav-link " id="nav-finalizados-tab" data-toggle="tab" href="#nav-finalizados" role="tab">Testes Finalizados</a>
+          </li>
+        </ul>
+     
 
       <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-pendentes" role="tabpanel" aria-labelledby="nav-pendentes-tab">
+        <div class="tab-pane fade active show" id="nav-pendentes" role="tabpanel" aria-labelledby="nav-pendentes-tab">
 
           <br>
           {% if item == "" %}
@@ -154,11 +172,11 @@
 
        
           {% endif %}          
-        </div> <!--aba pendente-->
+        </div> <!--fim aba pendente-->
 
 
 
-
+        <!--aba em andamento-->
         <div class="tab-pane fade" id="nav-andamento" role="tabpanel" aria-labelledby="nav-andamento-tab">
           <br>
           {% if item == "" %}
@@ -184,7 +202,7 @@
                       <tbody>
                         {% for item in andamento %}
                         <tr class="text-center">
-                          <td> <a href=" {% url 'testes:realiza-teste' item.id %}"> <img src="{% static 'testes/images/img-test.png' %}" width=26 ></a></td>
+                          <td> <a href="{% url 'testes:realiza-teste' item.id %}" onclick="$('#nav-andamento-tab').trigger('click')"> <img src="{% static 'testes/images/img-test.png' %}" width=26 ></a></td>
                           <td>{{ item.Numero_serie }}</td>
                           <td>{{ item.Requisicao }}</td>
                           <td>{{ item.Etapa_teste }}</td>
@@ -243,7 +261,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="card-title">
-                    <a type="button" class="close text-danger" href="{% url 'testes:lista-itens-teste' %}" id="nav-pendentes-tab" role="tab" aria-controls="nav-andamento" >
+                    <a type="button" class="close text-danger" href="{% url 'testes:lista-itens-teste' %}" onclick="abreAndamento()" >
                       x
                     </a>
                     <div class="row ">
@@ -288,11 +306,10 @@
               </div> <!--card form--> 
             </div><!--col form-->
           </div> <!--row-->
-
-       
           {% endif %}
-        </div> <!--aba em andamento-->
+        </div> <!--fim aba em andamento-->
 
+        <!--aba finalizados-->
         <div class="tab-pane fade" id="nav-finalizados" role="tabpanel" aria-labelledby="nav-finalizados-tab">
           <br>
           
@@ -310,6 +327,7 @@
                           <th>Requisicao</th>
                           <th>Etapa de Teste</th>
                           <th>Status de Teste</th>
+                          <th>Finalizado por</th>
                           <th>Descrição</th>
                         </tr>
                       </thead>
@@ -322,6 +340,7 @@
                           <td>{{ item.Requisicao }}</td>
                           <td>{{ item.Etapa_teste }}</td>
                           <td>{{ item.Status_teste }}</td>
+                          <td> {{ item.username }}
                           <td>{{ item.Descricao }}</td>
                         </tr>
                         {% endfor %}
@@ -332,8 +351,8 @@
                 </div> <!--card-body lista -->
               </div> <!--card lista -->
             </div> <!--col lista-->
-          </div>
-        </div>
+          </div> <!--row -->
+        </div><!--Fim aba finalizados-->
 
       </div>
     </div> <!--Card-body-->
