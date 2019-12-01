@@ -14,7 +14,8 @@ SITUACAO_CHOICES = (
     ("Reprovado","Reprovado")
 )
 
-ETAPA_CHOICES = (  
+ETAPA_CHOICES = (
+    ("Pendente", "Pendente"), 
     ("Burn In","Burn In"),
     ("Pre-Teste","Pre-Teste"),
     ("Teste Final","Teste Final")
@@ -34,18 +35,14 @@ class Teste(models.Model):
         blank = True
     )
 
-    Descricao = models.CharField(
-        'Teste de Burning',
-        max_length=30
-    )
-
     Lote_numero = models.CharField(
         'Número de Lote',
         max_length=50,
-        blank = True
+        blank = True,
+        null=True
     )
     
-    Inicio = models.DateTimeField(
+    Data_teste = models.DateTimeField(
         'Data Início',
         auto_now=True,
         blank = True

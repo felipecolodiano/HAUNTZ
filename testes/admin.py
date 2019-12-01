@@ -1,11 +1,14 @@
 from django.contrib import admin
-from testes.models import Menu_testes
+from testes.models import Menu_testes, Teste
 
 
-class TestesAdmin(admin.ModelAdmin):
+class MenuTestesAdmin(admin.ModelAdmin):
     list_display = ('Nome', 'Caminho')
 
+class TestesAdmin(admin.ModelAdmin):
+    list_display = ('Etapa_teste',)
 
 
-admin.site.register(Menu_testes, TestesAdmin)
+admin.site.register(Menu_testes, MenuTestesAdmin)
+admin.site.register(Teste, TestesAdmin)
 

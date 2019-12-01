@@ -103,7 +103,7 @@ class Item_requisicao(models.Model):
         blank = True,
         null = True,
         max_length = 20,
-        default='Burn In'
+        default='Pendente'
     )
 
     Status_teste = models.CharField(
