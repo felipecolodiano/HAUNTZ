@@ -8,7 +8,7 @@ from django.db.models import Q
 ### VIEWS MODELO ####
 
 @login_required
-def lista_modelo(request, id=None):
+def lista_modelo(request, id=None): # Lista Modelo
     pesquisa = request.GET.get("pesquisa", None)
     if pesquisa:
         list_modelo = Modelo_placas.objects.all()
@@ -27,7 +27,7 @@ def lista_modelo(request, id=None):
 
 
 @login_required
-def cadastrar_modelo(request):
+def cadastrar_modelo(request): # Cadastrar Modelo
     list_modelo = Modelo_placas.objects.all()
     context = {
         "form": ModeloForm,
@@ -37,11 +37,12 @@ def cadastrar_modelo(request):
         form = ModeloForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('placas:lista-modelo')
     return render(request, "placas/cadastrar-modelo.html", context)
 
 
 @login_required
-def excluir_modelo(request, id):
+def excluir_modelo(request, id):#Excluir Modelo
     modelos = get_object_or_404(Modelo_placas, id=id)
     context = {
         "modelos": Modelo_placas.objects.filter(id=id)[0]
@@ -53,7 +54,7 @@ def excluir_modelo(request, id):
 
 
 @login_required
-def atualiza_modelo(request, id):
+def atualiza_modelo(request, id):#Atualizar Modelo
     modelos = get_object_or_404(Modelo_placas, pk=id)
     form = ModeloForm(request.POST or None,
                       request.FILES or None, instance=modelos)
@@ -66,7 +67,7 @@ def atualiza_modelo(request, id):
     return render(request, "placas/cadastrar-modelo.html", context)
 
 
-### VIEWS PLACA ####
+########### VIEWS PLACA ##############
 
 @login_required
 def lista_placa(request, id=None):
@@ -88,14 +89,16 @@ def lista_placa(request, id=None):
 
 @login_required
 def cadastrar_placa(request):
-    context = {
-        "form": PlacaForm
-    }
     if request.method == "POST":
         form = PlacaForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('placas:lista-placa')
+    else:
+        form = PlacaForm()
+    context = {
+        "form": PlacaForm
+    }
     return render(request, "placas/cadastrar-placa.html", context)
 
 
@@ -124,7 +127,7 @@ def atualiza_placa(request, id):
         return redirect('placas:lista-placa')
     return render(request, "placas/cadastrar-placa.html", context)
 
-    ### VIEWS PLACA ####
+############# VIEWS LOTE #############
 
 
 @login_required
@@ -141,22 +144,8 @@ def lista_lote(request, id=None):
     }
     return render(request, "placas/lista-lote.html", context)
 
-    ############# VIEWS LOTE #############
 
 
-@login_required
-def lista_lote(request, id=None):
-    pesquisa = request.GET.get("pesquisa", None)
-    if pesquisa:
-        list_lote = Cadastro_lote.objects.all()
-        # Icontains é como se fosse um like%% do SQL
-        list_lote = list_lote.filter(Lote_numero__icontains=pesquisa)
-    else:
-        list_lote = Cadastro_lote.objects.all()
-    context = {
-        'list_lote': list_lote
-    }
-    return render(request, "placas/lista-lote.html", context)
 
 
 @login_required
@@ -170,6 +159,7 @@ def cadastrar_lote(request):
         form = LoteForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('placas:lista-lote')
     return render(request, "placas/cadastrar-lote.html", context)
 
 

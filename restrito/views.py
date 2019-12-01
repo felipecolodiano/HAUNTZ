@@ -12,7 +12,7 @@ def testa_administrador(user):
 @login_required
 @user_passes_test(testa_administrador)
 def home_administrador(request):
-    admin = Administrador.objects.filter(usuario=request.user)[0]
+    admin = Administrador.objects.filter(usuario=request.user).first()
     context = {'admin': admin}
     return render(request, 'restrito/index_administrador.html', context)
 
@@ -26,7 +26,7 @@ def testa_requisitor(user):
 @login_required
 @user_passes_test(testa_requisitor)
 def home_requisitor(request):
-    req = Requisitor.objects.filter(usuario=request.user)[0]
+    req = Requisitor.objects.filter(usuario=request.user).first()
     context = {'req': req}
     return render(request, 'restrito/index_requisitor.html', context)
 
@@ -40,7 +40,7 @@ def testa_supervisor(user):
 @login_required
 @user_passes_test(testa_supervisor)
 def home_supervisor(request):
-    sup = Supervisor.objects.filter(usuario=request.user)[0]
+    sup = Supervisor.objects.filter(usuario=request.user).first()
     context = {'sup': sup}
     return render(request, 'restrito/index_supervisor.html', context)
 
@@ -54,6 +54,6 @@ def testa_tester(user):
 @login_required
 @user_passes_test(testa_tester)
 def home_tester(request):
-    test = Tester.objects.filter(usuario=request.user)[0]
+    test = Tester.objects.filter(usuario=request.user).first()
     context = {'test': test} 
     return render(request, 'restrito/index_tester.html', context)

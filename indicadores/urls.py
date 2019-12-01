@@ -3,6 +3,6 @@ from indicadores import views
 
 app_name = 'indicadores'
 urlpatterns = [
-    path('<str:caminho>/', views.indicadores, name="indicadores1")
+    path('requisicao/', views.indicadores, name="indicadores-requisicao")
 ]
 

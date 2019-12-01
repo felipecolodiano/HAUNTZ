@@ -12,7 +12,9 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    
+    <link rel="stylesheet"href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -22,6 +24,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 
     <!-- servidor icones -->
     <script src="https://kit.fontawesome.com/73beefb8cc.js"></script>
@@ -74,39 +77,25 @@
                         <a class="nav-link" href="{% url 'requisicao:requisicao' %}">Requisição</a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Testes
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for teste in lista_testes %}
-                            <a class="dropdown-item" href="{% url 'testes:testes1' teste.Caminho %}">
-                                <i class="fas fa-tasks"> </i> {{ teste.Nome }}
-                            </a>
-
-                            <div class="dropdown-divider"></div>
-                            {% endfor %}
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'testes:lista-itens-teste' %}">Testes</a>
                     </li>
+
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Indicadores
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for indicador in Menu_indicadores %}
-                            <a class="dropdown-item" href=" {% url 'indicadores:indicadores1' indicador.Caminho %} ">
-
-                                {% if indicador.Nome == "Visão Macro" %}
-                                <i class="fas fa-table"></i>
-                                {% else %}
-                                <i class="far fa-chart-bar"></i>
-                                {% endif %}
-                                {{ indicador.Nome }}
+                            <a class="dropdown-item" href=" {% url 'indicadores:indicadores-requisicao' %} ">                            
+                            <i class="fas fa-chart-bar"></i> Requisição
                             </a>
                             <div class="dropdown-divider"></div>
-                            {% endfor %}
+                            <a class="dropdown-item" href="#">                            
+                            <i class="fas fa-chart-bar"></i> Testes
+                            </a>                    
+
                         </div>
                     </li>
 
@@ -119,10 +108,10 @@
                         </a></button>
                     <div class="dropdown-menu dropdown-menu-right " aria-labelledby="navbarDropdown">
                         {% if user.tipo == 'A' %}
-                        <a class="dropdown-item" href="{% url 'restrito:home_administrador'  %}"><i
+                        <a class="dropdown-item" href="{% url 'restrito:home_administrador'  %}" ><i
                                 class="fas fa-id-card"></i> Área do
                             Administrador</a>
-                        <a class="dropdown-item" href="/admin"><i class="fas fa-cog"></i> Administração do site</a>
+                        <a class="dropdown-item" href="/admin" target="_blank"><i class="fas fa-cog"></i> Administração do site</a>
                         {% elif user.tipo == 'S' %}
                         <a class="dropdown-item" href="{% url 'restrito:home_supervisor' %}"><i
                                 class="fas fa-id-card"></i> Área do Supervisor</a>
@@ -176,9 +165,9 @@
     </div>
 </main>
 </body>
-<footer>
+<footer class="text-center">
     <hr />
-    <p class="text-center">Todos os direitos reservados HAUTZ - TECHNOLOGY 2019</p>
+    <a class="bg-text-blue"> Todos os direitos reservados HAUTZ - TECHNOLOGY 2019 </a>
 </footer>
 
 </html>

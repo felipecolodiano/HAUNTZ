@@ -8,7 +8,7 @@
 
     <div class="card-body">
     
-        <h5 class="card-title mb-2">Abrir Requisiçao</h5>
+        <h5 class="card-title mb-2">Cadastrar Requisição</h5>
         <hr />
                     
         <form method="POST" class="post-form ">
@@ -16,26 +16,26 @@
             {{ formset.management_form|crispy }}
             <div class="card col-md-12 mb-2">
                 <div class="form-row">
-
                     <div class="form-group col-md-6 mb-0">
                         {{ form.Tipo_Req  | as_crispy_field}}
-                    </div>    
-                            
+                    </div>                            
                     <div class="form-group col-md-6 mb-0">
                         {{ form.Modelo | as_crispy_field}}
                     </div>
-
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12 mb-0">
-                        {{ form.Qtd_placa  | as_crispy_field}}
+                </div> 
+                <div class="form-row">                                                    
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.Status | as_crispy_field}}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.Qtd_requerida | as_crispy_field }}
                     </div>
                 </div>
                 <div class="form-row">                                                    
                   <div class="form-group col-md-12 mb-0">
-                    {{ form.Status  | as_crispy_field}}
+                    {{ form.Descricao  | as_crispy_field}}
                   </div>
-                </div>  
+                </div> 
             </div>
                         
             <div class="card text-center">

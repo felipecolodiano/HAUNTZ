@@ -4,12 +4,8 @@ from django.db import models
 class Cadastro_lote(models.Model):
     Lote_numero = models.CharField(
         'Numero do lote',
-        max_length=50
-    )
-
-    Qtd_placa = models.IntegerField(
-        'Quantidade de placa',
-        default=1
+        max_length=50,
+        null=False
     )
 
     Ativo = models.BooleanField(

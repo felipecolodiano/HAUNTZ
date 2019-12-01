@@ -4,7 +4,8 @@ from django.db import models
 class Cadastro_placas(models.Model):
     Numero_serie = models.CharField(
         'Número de série',
-        max_length=120
+        max_length=120,
+        unique=True
     )
     
     Modelo = models.ForeignKey(
@@ -20,21 +21,25 @@ class Cadastro_placas(models.Model):
     )
 
     Lote_numero = models.ForeignKey(
-        'placas.cadastro_lote',
-        related_name='numero_lote',
-        on_delete = models.PROTECT,
-        limit_choices_to= {'Ativo': True} #Limita somente a modelos ativos
-    )
+            'placas.cadastro_lote',
+            related_name='Lote_numero_lote',
+            on_delete = models.PROTECT,
+            null=True,
+            limit_choices_to= {'Ativo': True} #Limita somente a modelos ativos
+        )
 
     Observacao = models.TextField(
         'Observação',
         blank=True
     )
-   
 
+    Ativo = models.BooleanField(
+        'Placa Ativa',
+        default=True
+    )
     
     def __str__(self):
-        return self.Numero_serie
+        return '{} - {}'.format(self.Numero_serie, self.Modelo)
 
     class Meta:
         db_table = 'CADASTRO_PLACAS'

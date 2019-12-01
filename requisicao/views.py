@@ -1,38 +1,108 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from requisicao.models import Cadastro_Requisicao
+from requisicao.models import Cadastro_Requisicao, Item_requisicao
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import RequisicaoForm
+from .forms import RequisicaoForm, ItemForm
 from django.db.models import Q
 
 
-### VIEWS MODELO ####
 
-@login_required
-def lista_requisicao(request, id=None):
-    pesquisa = request.GET.get("pesquisa", None)
+### VIEWS REQUISICAO ####
+
+@login_required(login_url='/entrar')
+def requisicao(request):
+    context = {
+        'titulo': 'Requisições'
+    }
+    return render(request, 'requisicao/requisicao.html', context)
+
+@login_required(login_url='/entrar')
+def lista_requisicao(request, id=None, id_req=None ):
+    pesquisa = request.GET.get("pesquisa", None)    
     if pesquisa:
         list_requisicao = Cadastro_Requisicao.objects.all()
+        # Icontains é como se fosse um like%% do SQL
         list_requisicao = list_requisicao.filter(
-            Q(Tipo_Req__icontains=pesquisa)
-        )  # Icontains é como se fosse um like%% do SQL
+            Q(Tipo_Req__icontains=pesquisa) |
+            Q(id__icontains=pesquisa) |
+            Q(Modelo__icontains=pesquisa)
+        )
     else:
         list_requisicao = Cadastro_Requisicao.objects.all()
+        itens = Item_requisicao.objects.filter(Requisicao=id_req)
     context = {
-        'list_requisicao': list_requisicao
+        'list_requisicao': list_requisicao,
+        'list_itens': itens
     }
-    return render(request, "requisicao/requisicao.html", context)
+    return render(request, "requisicao/lista-requisicao.html", context)
 
 
-@login_required
+
+@login_required(login_url='/entrar')
 def cadastrar_requisicao(request):
     list_requisicao = Cadastro_Requisicao.objects.all()
-    context = {
-        "form": RequisicaoForm,
-        "list_requisicao": list_requisicao
-    }
     if request.method == "POST":
         form = RequisicaoForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('requisicao:requisicao')
+            requisicao = form.save(commit=False)
+            requisicao.username = request.user
+            requisicao.save()
+            return redirect('requisicao:lista-requisicao')
+    else:
+        form = RequisicaoForm()
+    context = {
+        "form": form
+    }
     return render(request, "requisicao/cadastrar-requisicao.html", context)
+
+@login_required(login_url='/entrar')
+def atualiza_requisicao(request, id):
+    req = get_object_or_404(Cadastro_Requisicao, pk=id)
+    form = RequisicaoForm(request.POST or None,
+                     request.FILES or None, instance=req)
+    context = {
+        "form": form
+    }
+    if form.is_valid():
+        form.save()
+        return redirect('requisicao:lista-requisicao')
+    return render(request, "requisicao/cadastrar-requisicao.html", context)
+
+
+@login_required(login_url='/entrar')
+def excluir_requisicao(request, id):
+    placa = get_object_or_404(Cadastro_Requisicao, id=id)
+    context = {
+        "requisicao": Cadastro_Requisicao.objects.filter(id=id)[0]
+    }
+    if request.method == "POST":
+        placa.delete()
+        return redirect('requisicao:lista-requisicao')
+    return render(request, "requisicao/excluir-requisicao.html", context)
+
+
+@login_required(login_url='/entrar')
+def cadastrar_item_requisicao(request, id_req):
+    list_item = Item_requisicao.objects.all()
+    req = Cadastro_Requisicao.objects.filter(id=id_req).first()
+    qtd_atendida = Item_requisicao.objects.filter(Requisicao_id=id_req).count()
+    qtd_requerida = req.Qtd_requerida
+    if request.method == "POST":
+        form = ItemForm(request.POST, id_form = id_req)      
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.username = request.user
+            item.Requisicao = req
+            item.save()
+            return redirect('requisicao:lista-requisicao')
+    else:
+        form = ItemForm(id_form = id_req)
+    context = {
+        "form": form,
+        "requisicao": req,
+        "qtd_atendida": qtd_atendida,
+        "qtd_requerida": qtd_requerida,
+        "qtd_pendente": qtd_requerida - qtd_atendida,
+        "percentual_int": int(qtd_atendida/qtd_requerida*100),
+        "percentual_float": round(qtd_atendida/qtd_requerida*100, 1)
+        }
+    return render(request, "requisicao/cadastrar-item-requisicao.html", context)

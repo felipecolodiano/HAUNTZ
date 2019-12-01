@@ -22,5 +22,4 @@ urlpatterns = [
     path('excluir-lote/<int:id>', views.excluir_lote, name="excluir-lote"),
     path('atualiza-lote/<int:id>', views.atualiza_lote, name="atualiza-lote")
     
-    
     ]

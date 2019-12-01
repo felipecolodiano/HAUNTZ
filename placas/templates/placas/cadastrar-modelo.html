@@ -31,7 +31,7 @@
                     
                     <div class="form-row col-md-12 mb-1">
                     
-                        <div class="form-group col-md-3 mb-2"><br>
+                        <div class="form-group col-md-12 mb-2"><br>
                             {{ form.Ativo  | as_crispy_field}}
                         </div>
                     </div>
@@ -40,9 +40,12 @@
 
             <div class="card text-center">
                 <div class="card-body">
-                    <button type="submit" class="save btn btn-outline-primary col-md-8 mb-2">Salvar</button>
+                    <div class="card-text">    
+                        <button type="button" value="Voltar" class="save btn btn-danger col-md-4 mb-2 pull-left" onClick="javascript: history.go(-1);">Cancelar</button>
+                        <button type="submit" class="save btn btn-primary col-md-5 mb-2 pull-right">Salvar</button>
+                    </div>
                 </div>
-            </div>      
+            </div>     
           
         </form>
         

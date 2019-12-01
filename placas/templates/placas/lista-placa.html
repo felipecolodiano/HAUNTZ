@@ -14,12 +14,15 @@
         <div class="card-body">
           <h5 class="card-title">Lista de Placas</h5>
 
-          {% if list_placa|length > 0 %}
+          
           <hr /></br>
           <div class="container">
             <a href="{% url 'placas:cadastrar-placa' %}" class="btn btn-success mb-2 btn-personal">
               <img src="{% static 'placas/images/acrescer-png.png' %}" width=13> Cadastrar Placa
             </a>
+
+
+            
             <form class="form-inline float-lg-right">
               </br>
               <div class="divBusca ">
@@ -31,7 +34,7 @@
             </form>
           </div>
         </div>
-
+        {% if list_placa|length > 0 %}
         <div style="overflow: auto; height: 300px">
           <table class="table table-striped table-bordered table-hover" role="grid"
             aria-describedby="dynamic-table_info">
@@ -41,7 +44,7 @@
                 <th>Nº de Série</th>
                 <th>Modelo</th>
                 <th>Revisão LM</th>
-                <th>Nº do Lote</th>
+                <th>Nº de Lote </th>
                 <th>Observação</th>
                 <th>Ação</th>
               </tr>

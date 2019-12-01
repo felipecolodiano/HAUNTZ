@@ -1,1 +1,1 @@
-from .requisicao import Cadastro_Requisicao
+from .requisicao import Cadastro_Requisicao, Item_requisicao

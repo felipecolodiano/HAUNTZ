@@ -1,37 +1,37 @@
 from django.db import models
 from django.db.models import constraints
 from placas.models import modelo_placas, cadastro_lote
-from requisicao.models import requisicao
-from testes.models import menu_testes
+#from requisicao.models import Item_requisicao, Cadastro_Requisicao
 
 STATUS_CHOICES = (  
-    ("Pedente", "Pedente"),
-    ("Em andamento","Em andamento"),
+    ("Pendente", "Pendente"),
+    ("Em andamento", "Em andamento"), 
     ("Finalizado", "Finalizado")
 )
 
 SITUACAO_CHOICES = (  
-    ("Em andamento", "Em andamento"),
     ("Aprovado","Aprovado"),
     ("Reprovado","Reprovado")
 )
 
 ETAPA_CHOICES = (  
-    ("Burn in","Burn in"),
-    ("Teste 2","Teste 2"),
+    ("Burn In","Burn In"),
+    ("Pre-Teste","Pre-Teste"),
     ("Teste Final","Teste Final")
 )
 
 class Teste(models.Model):
     Etapa_teste = models.CharField(
         'Etapa do teste',
-        choices=ETAPA_CHOICES
+        choices=ETAPA_CHOICES,
+        max_length = 20
     )
     
-    Requisicao = models.ForeignKey(
-        'requisicao.requisicao',
+    Item_requisicao = models.ForeignKey(
+        'requisicao.item_requisicao',
         on_delete=models.CASCADE,
-        related_name='Requisicao_Id_Requisicao'
+        related_name='Requisicao_Item_Requisicao',
+        blank = True
     )
 
     Descricao = models.CharField(
@@ -39,30 +39,35 @@ class Teste(models.Model):
         max_length=30
     )
 
-    Lote_numero = models.ForeignKey(
-        'placas.cadastro_lote', 
-        on_delete=models.CASCADE, 
-        related_name='Cadastro_numero_lote',
-        limit_choices_to= {'Ativo': True} #Limita somente a modelos ativos
+    Lote_numero = models.CharField(
+        'Número de Lote',
+        max_length=50,
+        blank = True
     )
     
     Inicio = models.DateTimeField(
         'Data Início',
-        auto_now=True
+        auto_now=True,
+        blank = True
     )    
     
     Fim = models.DateTimeField(
         'Data Fim',
+        blank = True,
+        null = True
     )
 
     Status = models.CharField(
-        'Status Teste',
-        choices=STATUS_CHOICES
+        'Status do Teste',
+        choices=STATUS_CHOICES,
+        max_length = 20,
+        blank=True
     )
 
     Situacao = models.CharField(
-        'Situaçao do teste',
-        choices=SITUACAO_CHOICES
+        'Situação do teste',
+        choices=SITUACAO_CHOICES,
+        max_length = 20
     ) 
 
     Observacao = models.CharField(
@@ -73,3 +78,5 @@ class Teste(models.Model):
     def __str__(self):
         return self.Etapa_teste
 
+    class Meta:
+        db_table = 'CADASTRO_TESTE'

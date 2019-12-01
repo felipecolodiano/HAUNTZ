@@ -1,4 +1,4 @@
-#!f:\documentos\faculdade\4º semestre\ope\projeto\gerenciamentodeplacas\venv\scripts\python.exe
+#!g:\documentos\faculdade\4º semestre\ope\projeto\gerenciamentodeplacas\venv\scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":

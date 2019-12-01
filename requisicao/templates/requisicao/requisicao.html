@@ -1,73 +1,51 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block titulo %} Requisição {% endblock  %}
-
+{% block titulo %} {{ titulo }} {% endblock  %}
 
 
 {% block conteudo %}
-
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Requições</h5>
-
-          {% if list_requisicao|length > 0 %}
-          <hr /></br>
+           <h5 class="card-title">Requisições</h5>       
+          <hr /></br></br></br>
           <div class="container">
-            <a href="{% url 'requisicao:cadastrar-requisicao' %}" class="btn btn-success mb-2 btn-personal">
-              <img src="{% static 'placas/images/acrescer-png.png' %}" width=13> Nova Requisição
-            </a>
-            <form class="form-inline float-lg-right">
-              </br>
-              <div class="divBusca ">
-                <img class="divBuscaimg " src="{% static 'images/lupa2.png' %}" alt="Buscar" width="25" />
-                <input type="text" class="txtBusca embed-responsive" name="pesquisa" id="txtBusca"
-                  placeholder="Buscar..." />
-                <button type="submit" id="btnBusca" class="btnBusca embed-responsive">Buscar</button>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Abrir nova requisição</h5>
+                      <p class="card-text">
+                        Solicite uma ou mais placas especificando as características desejada.
+                      </p>
+                      <a href="{% url 'requisicao:cadastrar-requisicao' %}" class="btn btn-success mb-2 btn-personal">
+                        <img src="{% static 'placas/images/acrescer-png.png' %}" width=13> Nova Requisição
+                      </a> 
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Lista de Requisições</h5>
+                      <p class="card-text">
+                        Veja aqui a lista de Requisições abertas.
+                      </p>
+                      <a href=" {% url 'requisicao:lista-requisicao' %} " class="btn btn-success mb-2 btn-personal">
+                        <img src="{% static 'images/icons/lista-prancheta-2.png' %}" width=20> Ir para lista
+                      </a> 
+                    </div>
+                  </div>
+                </div>
               </div>
-            </form>
           </div>
+
+
         </div>
 
-        <div style="overflow: auto; height: 300px">
-          <table class="table table-striped table-bordered table-hover" role="grid"
-            aria-describedby="dynamic-table_info">
-            <thead class="bg-dark text-white">
-              <tr class="text-center">
-                <th>Tipo de Requisição</th>
-                <th>Nº Lote</th>
-                <th>Modelo</th>
-                <th>Qtd de Placa</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {% for requisicao in list_requisicao %}
-              <tr class="text-center">
-                <td>{{ requisicao.Tipo_Req }}</td>
-                <td>{{ requisicao.Lote_numero }} </td>
-                <td>{{ requisicao.Modelo }} </td>
-                <td>{{ requisicao.Qtd_placa }} </td>
-                <td>{{ requisicao.Status }} </td>
-                <td>
-                    
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-
-          </table>
-        </div>
-        {% else %}
-        <div class="text-center mt-5 mb-5 jumbotron">
-          <h5>Nenhuma <code>requisição</code> cadastrada ainda </br>ou a pesquisa não retornou resultado.</h5>
-        </div>
-        {% endif %}
-        <hr />
 
       </div>
     </div>
@@ -75,6 +53,4 @@
 </div>
 </div>
 </div>
-
-
 {% endblock conteudo %}

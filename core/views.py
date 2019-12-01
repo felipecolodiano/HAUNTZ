@@ -1,15 +1,16 @@
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
+@login_required()
 def home(request):
     context = {
         "titulo":"GenesisQ"
 
     }
     return render(request, "index.html", context)
-
 
 def entrar(request):
     context = {}
@@ -24,9 +25,11 @@ def entrar(request):
             messages.error(request, 'Usuário ou senha incorretos!')
     return render(request, 'entrar.html', context)
 
+
 def sair(request):
     logout(request)
     return redirect('core:home')
 
+@login_required
 def admin(request):
     return redirect('core:admin')

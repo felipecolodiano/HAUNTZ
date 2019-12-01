@@ -4,15 +4,25 @@ a {
 }
 
 footer {
-    color: white
+    /*color: white; */
+    color: rgb(14, 60, 83);
+    
 }
+
+.bg-text-blue{
+    /* background: rgb(14, 60, 83); */
+    background: white;
+    border-radius: 10px;
+    border: solid 1px rgb(14, 60, 83);v
+
+}
+
 
 /* botões */
 
 .btn-personal {
     text-align: center;
     float: left;
-    top: 50%;
     position: relative;
     border-radius: 10px;
     border-color: rgb(14, 60, 83);
@@ -34,7 +44,9 @@ body {
     overflow: auto;
 }
 
+
 /* imagem profile tela restrito */
+
 .img-restrito {
     position: relative;
     top: -100px;
@@ -44,16 +56,21 @@ body {
     left: 500px;
 }
 
+
 /* css titulos h2 */
 
-h2, .descricao-restrito {
+h2,
+.descricao-restrito {
     color: white
 }
 
+
 /* tamanho da fonte do site */
+
 html {
     font-size: 14px;
 }
+
 
 /* css campo de busca */
 

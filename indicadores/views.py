@@ -4,11 +4,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 @login_required
-def indicadores(request, caminho):    
-    indicador = get_object_or_404(Menu_indicadores, Caminho = caminho)
-
+def indicadores(request):
     context = {
-        "indicador": indicador
+        "titulo": ""
+
     }
     
-    return render(request, "indicadores/indicadores.html", context)
+    return render(request, "indicadores/indicadores_requisicao.html", context)

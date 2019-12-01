@@ -14,7 +14,7 @@
         <div class="card-body">
           <h5 class="card-title">Lista de Modelos de Placa</h5>
 
-          {% if list_modelo|length > 0 %}
+          
           <hr /></br>
           <div class="container">
             <a href="{% url 'placas:cadastrar-modelo' %}" class="btn btn-success mb-2 btn-personal">
@@ -31,7 +31,7 @@
             </form>
           </div>
         </div>
-
+        {% if list_modelo|length > 0 %}
         <div style="overflow: auto; height: 300px">
           <table class="table table-striped table-bordered table-hover" role="grid"
             aria-describedby="dynamic-table_info">
