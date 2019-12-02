@@ -78,8 +78,7 @@ class Teste(models.Model):
         related_name='contas_usuario_username_teste',
         on_delete = models.PROTECT,
         editable = False,
-        default = "",
-        null = True
+        default = ""
     )
 
     def __str__(self):

@@ -12,9 +12,11 @@ urlpatterns = [
 
     #Urls placa
     path('lista-placa/', views.lista_placa, name="lista-placa"),
+    path('lista-placa/exportar-csv', views.ExportarParaCSV, name="exportar-csv"),
     path('cadastrar-placa/', views.cadastrar_placa, name="cadastrar-placa"  ),
     path('excluir-placa/<int:id>', views.excluir_placa, name="excluir-placa" ),
     path('atualiza-placa/<int:id>', views.atualiza_placa, name="atualiza-placa"),
+
 
     #Urls lote
     path('lista-lote/', views.lista_lote, name="lista-lote"),

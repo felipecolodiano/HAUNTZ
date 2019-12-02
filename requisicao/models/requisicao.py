@@ -114,6 +114,14 @@ class Item_requisicao(models.Model):
         default='Pendente'
     )
     
+    Situacao_teste = models.CharField(
+        'Status do teste',
+        blank = True,
+        null = True,
+        max_length = 20,
+        default=''
+    )
+
     Data_item = models.DateTimeField(
         auto_now_add = True
     )
@@ -123,7 +131,8 @@ class Item_requisicao(models.Model):
         related_name='contas_usuario_username_item',
         on_delete = models.PROTECT,
         editable = False,
-        default = ""
+        default = "",
+        null = True
     )
 
     def __str__(self):

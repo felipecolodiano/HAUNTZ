@@ -3,6 +3,8 @@ from placas.models import Menu_placas, Modelo_placas, Cadastro_placas, Cadastro_
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import ModeloForm, PlacaForm, LoteForm
 from django.db.models import Q
+import csv
+from django.http import HttpResponse
 
 
 ### VIEWS MODELO ####
@@ -185,3 +187,24 @@ def atualiza_lote(request, id):
         form.save()
         return redirect('placas:lista-lote')
     return render(request, "placas/cadastrar-lote.html", context)
+
+
+
+#### EXPORTA CSV ####
+
+def ExportarParaCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="PlacasCadastradas.csv"'
+
+    placas = Cadastro_placas.objects.filter()
+
+    writer = csv.writer(response)
+    writer.writerow(['Num.Serie', 'Modelo', 'Revisao_LM', 'Num. Lote', 'Observacao', 'Situacao'])
+    
+    for registro in placas:
+        writer.writerow([registro.Numero_serie, 
+                        registro.Modelo, registro.Revisao_lm, 
+                        registro.Lote_numero, registro.Observacao, 
+                        registro.Ativo
+                        ])
+    return response
