@@ -3,7 +3,7 @@ from requisicao.models import Cadastro_Requisicao, Item_requisicao
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import RequisicaoForm, ItemForm
 from django.db.models import Q
-
+from django.contrib import messages
 
 
 ### VIEWS REQUISICAO ####
@@ -86,16 +86,25 @@ def cadastrar_item_requisicao(request, id_req):
     req = Cadastro_Requisicao.objects.filter(id=id_req).first()
     qtd_atendida = Item_requisicao.objects.filter(Requisicao_id=id_req).count()
     qtd_requerida = req.Qtd_requerida
-    if request.method == "POST":
-        form = ItemForm(request.POST, id_form = id_req)      
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.username = request.user
-            item.Requisicao = req
-            item.save()
-            return redirect('requisicao:lista-requisicao')
+    if qtd_requerida == qtd_atendida:
+        ds = True
+        descricao = True
     else:
-        form = ItemForm(id_form = id_req)
+        ds = False
+        descricao = False
+    if request.method == "POST":
+        form = ItemForm(request.POST, id_form = id_req, disable_serie = ds, disable_descricao = descricao)      
+        if form.is_valid():
+            if form.cleaned_data['Numero_serie'].Modelo == req.Modelo:
+                item = form.save(commit=False)
+                item.username = request.user
+                item.Requisicao = req
+                item.save()
+                return redirect('requisicao:lista-requisicao')
+            else:
+                messages.error(request, 'Modelo diferente do requisitado!')
+    else:
+        form = ItemForm(id_form = id_req, disable_serie = ds, disable_descricao = descricao)
     context = {
         "form": form,
         "requisicao": req,

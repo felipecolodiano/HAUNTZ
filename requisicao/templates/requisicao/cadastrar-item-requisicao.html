@@ -4,6 +4,9 @@
 {% block titulo %} Novo Item{% endblock  %}
     
 {% block conteudo %}
+
+
+
 <div class="container">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -17,6 +20,10 @@
               <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                 <div class="card">
                   <div class="card-body">
+                  {% if qtd_atendida == qtd_requerida %}
+                    <div class="text-danger text-center"><p> Requisição já foi atendida.  </p></div>
+                  {% endif %}
+
                     <form method="POST" class="post-form ">
                       {% csrf_token %}
                       {{ formset.management_form|crispy }}
@@ -39,7 +46,12 @@
                       </div>                        
                       
                       <div class="card-body text-center">
+                        {% if qtd_atendida == qtd_requerida %}
+                        <button type="submit" class="save btn btn-outline-primary col-md-8 mb-2" disabled>Salvar</button>
+                        {% else %}
                         <button type="submit" class="save btn btn-outline-primary col-md-8 mb-2">Salvar</button>
+                        {% endif %}
+                        
                       </div>      
                     </form>
                   </div>

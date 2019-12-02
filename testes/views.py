@@ -18,8 +18,7 @@ def lista_testes(request, id_item=None):
         'pendente': itens_pendente,
         'andamento': itens_andamento,
         'finalizado': itens_finalizado
-    }
-    
+    }    
     return render(request, "testes/lista-itens-teste.html", context)
 
 
@@ -61,6 +60,7 @@ def realiza_teste(request, id_item=None):
                     item.Situacao_teste = 'Aprovado'
                 else:
                     item.Status_teste = 'Finalizado'
+                    item.Situacao_teste = 'Aprovado'
             if form.cleaned_data['Situacao'].upper() == "REPROVADO":
                 item.Status_teste = 'Finalizado'
                 item.Situacao_teste = 'Reprovado'
