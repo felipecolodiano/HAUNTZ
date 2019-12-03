@@ -11,45 +11,47 @@
     <div class="col-12">
         <div class="card mb-3"> 
             <div class="card-body" >
-                <canvas class="bar-chart" ></canvas>
+                <div class="col-6">
+                    <canvas class="bar-chart"  > </canvas>
 
-                <script>
-                    var ctx = document.getElementsByClassName("bar-chart");
-                    var modelos = JSON.parse('{{ modelos|safe }}');
-                    var requeridas = JSON.parse('{{ requeridas|safe }}');
+                    <script>
+                        var ctx = document.getElementsByClassName("bar-chart");
+                        var modelos = JSON.parse('{{ modelos|safe }}');
+                        var requeridas = JSON.parse('{{ requeridas|safe }}');
 
 
 
-                //Type, Data e options
+                    //Type, Data e options
 
-                    var chartGraph = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: modelos,
-                            datasets: [
-                            {
-                                    label: 'Modelo' ,
-                                    data: requeridas,
-                                    borderWidth: 2,
-                                    borderColor: 'rgba(77,2,253,0.85)',
-                                    backgroundcolor: 'solid)'
+                        var chartGraph = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: modelos,
+                                datasets: [
+                                {
+                                        label: 'Modelo' ,
+                                        data: requeridas,
+                                        borderWidth: 2,
+                                        borderColor: 'rgba(77,2,253,0.85)',
+                                        backgroundcolor: 'solid)'
+                                },
+    
+                                ]
                             },
- 
-                            ]
-                        },
-                        options: {
-                        title: {
-                            display: true,
-                            fontSize: 15,
-                            text: "Placas requeridas por modelo"
-                        },
-                        labels: {
-                            fontStyle: "bold", 
-                        }
-                        }       
-                    });
-                
-                </script>
+                            options: {
+                            title: {
+                                display: true,
+                                fontSize: 15,
+                                text: "Placas requeridas por modelo"
+                            },
+                            labels: {
+                                fontStyle: "bold", 
+                            }
+                            }       
+                        });
+                    
+                    </script>
+                </div>
             </div>
         </div>
     </div>
