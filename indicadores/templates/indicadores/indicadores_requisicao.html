@@ -6,58 +6,53 @@
 
 {% block conteudo %}
 
+  
 <div class="container-fluid">
-<div class="col-12 ">
-<div class="card mb-3">
-  <img class="card-img-top" src=".../100px180/" alt="Imagem de capa do card">
-  <div class="card-body">
-    <canvas class="line-chart"></canvas>
+    <div class="col-12">
+        <div class="card mb-3"> 
+            <div class="card-body" >
+                <canvas class="bar-chart" ></canvas>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+                <script>
+                    var ctx = document.getElementsByClassName("bar-chart");
+                    var modelos = JSON.parse('{{ modelos|safe }}');
+                    var requeridas = JSON.parse('{{ requeridas|safe }}');
 
-        <script>
-            var ctx = document.getElementsByClassName("line-chart");
 
-            var teste = document.getElementsByClassName("chart")
 
-        //Type, Data e options
+                //Type, Data e options
 
-            var chartGraph = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
-                    datasets: [
-                    {
-                            label: "Taxa de Cliques - 2019",
-                            data: [5,10,20,15,25,23,5,8,6,98,6,5],
-                            borderWidth: 2,
-                            borderColor: 'rgba(77,2,253,0.85)',
-                            backgroundcolor: 'transparent'
-                    },
-                    {
-                            label: "Taxa de Cliques - 2019",
-                            data: [12,5,20,15,89,19,4,9,6,2,6,5],
-                            borderWidth: 2,
-                            borderColor: 'rgba(6,204,6,0.85)',
-                            backgroundcolor: 'transparent'
+                    var chartGraph = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: modelos,
+                            datasets: [
+                            {
+                                    label: 'Modelo' ,
+                                    data: requeridas,
+                                    borderWidth: 2,
+                                    borderColor: 'rgba(77,2,253,0.85)',
+                                    backgroundcolor: 'solid)'
+                            },
+ 
+                            ]
                         },
-                    ]
-                },
-                options: {
-                title: {
-                    display: true,
-                    fontSize: 20,
-                    text: "REQUISIÇÕES"
-                },
-                labels: {
-                    fontStyle: "bold", 
-                }
-                }       
-            });
-        
-        </script>
+                        options: {
+                        title: {
+                            display: true,
+                            fontSize: 15,
+                            text: "Placas requeridas por modelo"
+                        },
+                        labels: {
+                            fontStyle: "bold", 
+                        }
+                        }       
+                    });
+                
+                </script>
+            </div>
+        </div>
     </div>
 </div>
-</div>
-</div>
 {% endblock conteudo %}
+

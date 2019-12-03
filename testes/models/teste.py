@@ -47,7 +47,7 @@ class Teste(models.Model):
         'Data Início',
         auto_now=True,
         blank = True
-    )    
+    )
     
     Fim = models.DateTimeField(
         'Data Fim',
