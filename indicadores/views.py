@@ -5,13 +5,25 @@ from requisicao.models import Cadastro_Requisicao, Item_requisicao
 from django.contrib.auth.decorators import login_required, user_passes_test
 #from placas.models import Teste
 from datetime import datetime
+from collections import *
 
 
 @login_required
 def indicadores_requisicao(request):
     queryset1 = Cadastro_Requisicao.objects.all()
-    modelos = [str(obj.Modelo) for obj in queryset1]
+    modelos = [str(obj.Modelo.Modelo) for obj in queryset1]
     count_req = [int(obj.Qtd_requerida) for obj in queryset1]
+
+
+    m = []
+    q = []
+    t = []
+    
+    for modelo in queryset1:
+        m.append(str(modelo.Modelo.Modelo).split()[0])
+        [ t.append(item) for item in m if not t.count(item) ] 
+        conta = m.count(str(modelo.Modelo).split()[0])
+        q.append(conta)  
 
     queryset2 = Cadastro_Requisicao.objects.all()
     status = [str(obj.Status) for obj in queryset2]
@@ -19,11 +31,11 @@ def indicadores_requisicao(request):
 
     context = {
         'titulo1': "",
-        'modelos': json.dumps(modelos),
-        'requeridas': json.dumps(count_req),
+        'modelos': json.dumps(t),
+        'requeridas': json.dumps(q),
         'titulo2':"",
-        'status': json.dumps(status),
-        'atendidas': json.dumps(count_aten)
+        'status': json.dumps(t),
+        'atendidas': json.dumps(q)
     }
     
     return render(request, "indicadores/indicadores_requisicao.html", context)
