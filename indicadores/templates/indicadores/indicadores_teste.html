@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block titulo %} Dashboard Teste {{ titulo }} {% endblock  %}
+
+
+{% block conteudo %}
+
+  
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">  
+                <div class="col-6 ">  
+                    <div class="card">
+
+    
+                        <div style="height: 300px">
+                            <canvas class="bar-chart"  > </canvas>
+                        </div>
+                        <script>
+                            var ctx = document.getElementsByClassName("bar-chart");
+                            var modelos = JSON.parse('{{ modelos|safe }}');
+                            var requeridas = JSON.parse('{{ requeridas|safe }}');
+
+                        //Type, Data e options
+                            var chartGraph = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: modelos,
+                                    datasets: [
+                                    {
+                                            label: 'Modelo' ,
+                                            data: requeridas,
+                                            borderWidth: 2,
+                                            backgroundColor: '#0E3C53',
+
+                                    },
+
+                                    ]
+                                },
+                                options: {
+                                    title: {
+                                        display: true,
+                                        fontSize: 15,
+                                        text: "Placas requeridas por modelo"
+                                    },
+                                    labels: {
+                                        fontStyle: "bold", 
+                                        },
+
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            },
+                                            gridLines:{
+                                                color: "rgba(0,0,0,0)",
+                                                display: false
+                                            }
+                                        }]
+                                    },
+                                    offsetGridLines: false
+                                }       
+                            });
+                        
+                        </script>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card"> 
+                        <div style="height: 300px;  width:400">
+                            <canvas class="pizza-chart" > </canvas>
+                        </div>
+                        <script>
+                            var cty = document.getElementsByClassName("pizza-chart");
+                            var item = JSON.parse('{{ item| safe }}');
+                            var quantidade = JSON.parse('{{ qtd| safe }}');
+
+
+                        //Type, Data e options
+
+                            var pizzatGraph = new Chart(cty, {
+                                type: 'horizontalBar',
+                                data: {
+                                    labels: item,
+                                    datasets: [
+                                    {
+                                            label: item ,
+                                            data: quantidade,
+                                            borderWidth: 2,
+                                            borderColor: "rgba(151,187,205,0.5)",
+                                            backgroundColor: [
+                                                '#0E3C53',
+                                                '#8FFA7A',
+                                                '#6C757D',
+                                                '#FFCE56',                                                
+                                                '#795548',
+                                                '#1E8C14',
+                                                '#FFEB3B',
+                                                '#9E9E9E'
+                                            ]
+                                    },
+
+                                    ]
+                                },
+                                options: {
+                                    title: {
+                                        display: true,
+                                        fontSize: 15,
+                                        text: "Quantidade de placas por status"
+                                    },
+                                    labels: {
+                                    fontStyle: "bold", 
+                                    },
+                                    maintainAspectRatio: false,
+                                } 
+                                
+                            });
+                        
+                        </script>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>  
+    </div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock conteudo %}
+

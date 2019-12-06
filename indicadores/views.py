@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from indicadores.models import Menu_indicadores
 from requisicao.models import Cadastro_Requisicao, Item_requisicao
+from testes.models import Teste
 from django.contrib.auth.decorators import login_required, user_passes_test
 #from placas.models import Teste
 from datetime import datetime
@@ -31,8 +32,8 @@ def indicadores_requisicao(request):
 
     context = {
         'titulo1': "",
-        'modelos': json.dumps(t),
-        'requeridas': json.dumps(q),
+        'modelos': json.dumps(modelos),
+        'requeridas': json.dumps(count_req),
         'titulo2':"",
         'status': json.dumps(t),
         'atendidas': json.dumps(q)
@@ -41,3 +42,20 @@ def indicadores_requisicao(request):
     return render(request, "indicadores/indicadores_requisicao.html", context)
 
 
+@login_required
+def indicadores_teste(request):
+    queryset1 = Teste.objects.all()
+    conta = []
+    item = [str(obj.Etapa_teste).split()[0] for obj in queryset1]
+    for i in queryset1:
+        conta.append(i.Etapa_teste)
+    
+
+    context = {
+        'titulo1': "",
+        'titulo2':"",
+        'item': json.dumps(item),
+        'qtd': json.dumps(conta),
+    }
+    
+    return render(request, "indicadores/indicadores_teste.html", context)

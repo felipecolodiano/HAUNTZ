@@ -107,3 +107,39 @@ def ExportarTesteoCSV(request):
                         registro.username,
                         ])
     return response
+
+
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+
+def rel_teste(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="testes.pdf"'
+
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer)
+
+    p.drawString(210, 810, "RELATORIO DE TESTES - GERAL")
+
+    testes = Teste.objects.all()
+
+    str_ = ' %s      %s        %s       %s      %s        %s    '
+
+    p.drawString(10,790, 'Etapa        |                              Item                        |         Lote        |     Data Fim     |      Status      |     Situacao     ')
+
+    p.drawString(0, 810, "___" * 200)
+
+    y= 750
+    for test in testes:
+        p.drawString(5, y, str_ % (test.Etapa_teste, test.Item_requisicao, test.Lote_numero, test.Fim, test.Status, test.Situacao))      
+        y -= 22
+
+    p.showPage()
+    p.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
