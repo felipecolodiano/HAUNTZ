@@ -11,17 +11,19 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Lista de Placas</h5>
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title" style="text-align: left">Lista de Placas
+            <div class="teste" style="text-align: right">
+              <a href="{% url 'placas:exportar-csv'  %}" class="btn btn-info"><i  class="far fa-file-excel"> - Exportar para CSV</i></a>
+            </div>
+          </h5>
 
-          
-          <hr /></br>
+          <hr/></br>
           <div class="container">
             <a href="{% url 'placas:cadastrar-placa' %}" class="btn btn-success mb-2 btn-personal">
               <img src="{% static 'placas/images/acrescer-png.png' %}" width=13> Cadastrar Placa
             </a>
-
-          <a class="float-lg-center" href="{% url 'placas:exportar-csv'  %}"><i  class="far fa-file-excel"></i> Exportar </a>
             
             <form class="form-inline float-lg-right">
               </br>

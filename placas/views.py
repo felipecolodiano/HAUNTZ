@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import ModeloForm, PlacaForm, LoteForm
 from django.db.models import Q
 import csv
+import xlwt
 from django.http import HttpResponse
 
 
@@ -208,3 +209,85 @@ def ExportarParaCSV(request):
                         registro.Ativo
                         ])
     return response
+
+#--------- Exportar MOdelo CSV ---------------#
+
+def ExportarModeloCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="ModelosCadastrados.csv"'
+
+    placas = Modelo_placas.objects.filter()
+
+    writer = csv.writer(response)
+    writer.writerow(['Modelo', 'Descricao', 'Ativo'])
+
+    for registro in placas:
+        writer.writerow([registro.Modelo, 
+                        registro.Descricao,
+                        registro.Ativo
+                        ])
+    return response
+
+#----------- Exportar Lote CSV ----------------#
+
+def ExportarLoteCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="LotesCadastrados.csv"'
+
+    placas = Cadastro_lote.objects.filter()
+
+    writer = csv.writer(response)
+    writer.writerow(['Num.Lote','Ativo'])
+
+    for registro in placas:
+        writer.writerow([registro.Lote_numero, 
+                        registro.Ativo
+                        ])
+    return response
+
+'''
+def ExportarParaCSV(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="PlacasCadastradas.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Cadastro de Placas')
+
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Num.Serie', 'Modelo', 'Revisao_LM', 'Num. Lote', 'Observacao', 'Situacao']
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    font_style = xlwt.XFStyle()
+
+    registros = Cadastro_placas.objects.all()
+
+    #writer = csv.writer(response)
+    #writer.writerow(['Num.Serie', 'Modelo', 'Revisao_LM', 'Num. Lote', 'Observacao', 'Situacao'])
+    
+    # for registro in placas:
+    #     writer.writerow([registro.Numero_serie, 
+    #                     registro.Modelo, registro.Revisao_lm, 
+    #                     registro.Lote_numero, registro.Observacao, 
+    #                     registro.Ativo
+    #                     ])
+    
+    row_num = 1
+    for registro in registros:
+        ws.write(row_num, 0, registro.Numero_serie, font_style,)
+        ws.write(row_num, 1, registro.Modelo, font_style,)
+        ws.write(row_num, 2, registro.Revisao_lm, font_style,)
+        ws.write(row_num, 3, registro.Lote_numero, font_style,)
+        ws.write(row_num, 4, registro.Observacao, font_style,)
+        ws.write(row_num, 5, registro.Ativo, font_style,)
+        row_num += 1
+        
+    wb.save(response)
+    return response
+    '''
+

@@ -6,6 +6,9 @@ from placas.models import Cadastro_placas
 from testes.models import Menu_testes, Teste
 from testes.forms import FormTeste
 from requisicao.forms import ItemForm
+import csv
+import xlwt
+from django.http import HttpResponse
 
 @login_required(login_url='/entrar')
 def lista_testes(request, id_item=None):
@@ -79,3 +82,28 @@ def realiza_teste(request, id_item=None):
         'placa': placa
     }
     return render(request, "testes/lista-itens-teste.html", context)
+
+
+#--------------- Exportar Testes CSV ----------------------#
+
+def ExportarTesteoCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="TestesCadastrados.csv"'
+
+    testes = Teste.objects.filter()
+
+    writer = csv.writer(response)
+    writer.writerow(['Etapa_do_teste','Item_requisicao','Lote_numero','Data_teste','Fim','Status','Situacao','Observacao','Usuario'])
+
+    for registro in testes:
+        writer.writerow([registro.Etapa_teste, 
+                        registro.Item_requisicao,
+                        registro.Lote_numero,
+                        registro.Data_teste,
+                        registro.Fim,
+                        registro.Status,
+                        registro.Situacao,
+                        registro.Observacao,
+                        registro.username,
+                        ])
+    return response

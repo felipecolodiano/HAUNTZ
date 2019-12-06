@@ -32,7 +32,7 @@ footer {
     /* flex para alinhar conteúdo*/
     justify-content: center;
     align-items: center;
-    font-size: 13px
+    font-size: 13px 
 }
 
 body {

@@ -6,6 +6,7 @@ app_name = 'placas'
 urlpatterns = [
     #Urls modelo
     path('lista-modelo/', views.lista_modelo, name="lista-modelo"),
+    path('lista-modelo/exportar-csv', views.ExportarModeloCSV, name="exportar-csv1"),
     path('cadastrar-modelo/', views.cadastrar_modelo, name="cadastrar-modelo"),
     path('excluir-modelo/<int:id>', views.excluir_modelo, name="excluir-modelo"),
     path('atualiza-modelo/<int:id>', views.atualiza_modelo, name="atualiza-modelo"),
@@ -20,6 +21,7 @@ urlpatterns = [
 
     #Urls lote
     path('lista-lote/', views.lista_lote, name="lista-lote"),
+    path('lista-lote/exportar-csv', views.ExportarLoteCSV, name="exportar-csv2"),
     path('cadastrar-lote/', views.cadastrar_lote, name="cadastrar-lote"),
     path('excluir-lote/<int:id>', views.excluir_lote, name="excluir-lote"),
     path('atualiza-lote/<int:id>', views.atualiza_lote, name="atualiza-lote")

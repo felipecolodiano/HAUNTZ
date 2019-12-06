@@ -1,20 +1,49 @@
 {% extends "base.html" %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'restrito/static/css/alinha.css' %}">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+
 {% block titulo %} Área do Administrador {% endblock titulo %}
-
-
-
 {% block conteudo %}
 
 
-<div class="descricao-restrito">
-    <h2> Olá, {{ admin.nome }} </h2>
-    <p> Suas funções </p>
-    <p>- Requisitar Placas</p>
-    <p>- Acompanhar Requisições</p>
-    <p>- Visualizar Indicadores</p>
-    <p>- Criar Usuários</p>
-    <p>- Alterar Usuários</p>
-</div>
+  <!--div class="container-fluid"-->
+  <div class="container">
+
+    <div class="form-center">
+	    <div class="modal-lg" role="document" style="margin-top:20px; margin-rigth:40px; margin-left:150px; width: 70%; height: 200px;">
+        <div class="modal-content p-3 mb-2 bg-info text-white" style="border-radius: 8px;">
+          <div class="modal-header">        
+                                            
+            <h1 class="display-4">Olá, {{ admin.nome }}</h1>
+            <hr class="my-4">
+          </div>  
+          <div class="modal-body">
+            
+            <p class="lead">Seja bem-vindo ao sistema, aqui você pode gerenciar, organizar e otimizar o seu trabalho.</p>
+            
+            <strong>
+              <p class="my-4">- PRINCIPAIS FUNÇÕES:</p>
+            </strong>
+            <p class="lead">- Requisitar Placas</p>
+            <p class="lead">- Acompanhar Requisições</p>
+            <p class="lead">- Visualizar Indicadores</p>
+            <p class="lead">- Criar Usuários</p>
+            <p class="lead">- Alterar Usuários</p>
+            
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 {% endblock conteudo %}

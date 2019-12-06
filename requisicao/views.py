@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import RequisicaoForm, ItemForm
 from django.db.models import Q
 from django.contrib import messages
-
+import csv
+import xlwt
+from django.http import HttpResponse
 
 ### VIEWS REQUISICAO ####
 
@@ -115,3 +117,29 @@ def cadastrar_item_requisicao(request, id_req):
         "percentual_float": round(qtd_atendida/qtd_requerida*100, 1)
         }
     return render(request, "requisicao/cadastrar-item-requisicao.html", context)
+
+
+# ------------------- Exportar para CSV ---------------------#
+
+
+def ExportarRequisicaoCSV(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="RequisicaoCadastradas.csv"'
+
+    requisicao = Cadastro_Requisicao.objects.filter()
+
+    writer = csv.writer(response)
+    writer.writerow(['Tipo de Req','Modelo','Qtd.Requerida','Qtd.Atendida','Status','Descricao','Data_requisicao','Data_alteracao_requisicao','username'])
+
+    for registro in requisicao:
+        writer.writerow([registro.Tipo_Req, 
+                        registro.Modelo,
+                        registro.Qtd_requerida,
+                        registro.Qtd_atendida,
+                        registro.Status,
+                        registro.Descricao,
+                        registro.Data_requisicao,
+                        registro.Data_alteracao_requisicao,
+                        registro.username,
+                        ])
+    return response
